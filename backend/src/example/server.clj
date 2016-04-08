@@ -1,37 +1,36 @@
 (ns example.server
   (:require [ring.util.response :as response]
             [ring.middleware.cors :refer [wrap-cors]]
-            ;; maybe not?
+            ;; TODO maybe not?
             [reloaded.repl :refer [system]]
             [example.transit :refer [wrap-transit]]
-            [example.parser :as parser]))
+            [example.parser :as parser]
+            [example.util :as util]))
 
 (defn conn
   "Get Datomic connection from the system map"
   []
   (get-in system [:db :conn]))
 
-#_(defn pull-out-tempids
-    "Gross. I have to get the tempids up a level, but it should be easier."
-    [response]
-    (->> response
-      (map (fn [entry]
-             (if (symbol? (first entry))
-               (let [[action value] entry
-                     tempids (get-in value [:result :tempids] {})
-                     new-value (-> value
-                                 (assoc :tempids tempids)
-                                 (util/dissoc-in [:result :tempids]))]
-                 [action new-value])
-               entry)))
-      (into {})))
+(def pull-up-tempids
+  "Move :tempids out of :result hash and up to root"
+  (map
+    (fn [[key value :as map-entry]]
+      (if-not (symbol? key)
+        map-entry
+
+        (let [tempids (get-in value [:result :tempids] {})
+              new-value (-> value
+                          (assoc :tempids tempids)
+                          (util/dissoc-in [:result :tempids]))]
+          [key new-value])))))
 
 (defn handle-query [req]
   (let [query (:body req)
         ;; TODO identity
         resp (parser/parser {:conn (conn) :identity (:identity req)} query)]
-    (-> resp
-      #_(pull-out-tempids)
+    (->> resp
+      (into {} pull-up-tempids)
       (response/response))))
 
 (def app
