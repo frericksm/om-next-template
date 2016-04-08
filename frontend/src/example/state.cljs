@@ -2,7 +2,9 @@
   (:require [om.next :as om]))
 
 (defonce app-state
-  (atom {:app/msg "App state message"}))
+  (atom {:todos/list [[:todos/by-id 1] [:todos/by-id 2]]
+         :todos/by-id {1 {:todo/text "First Todo"}
+                       2 {:todo/text "Second Todo"}}}))
 
 ;;;;;;;;;;
 ;; Read ;;
@@ -16,6 +18,11 @@
     (if (contains? st k)
       {:value (get st k)}
       {:remote true})))
+
+(defmethod read :todos/list
+  [{:keys [state query]} key _]
+  (let [st @state]
+    {:value (om/db->tree query (get st key) st)}))
 
 ;;;;;;;;;;;;
 ;; Mutate ;;
