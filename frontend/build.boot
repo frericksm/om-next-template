@@ -65,7 +65,8 @@
   (merge-env! :source-paths #{"dev"})
   (task-options!
     cljs {:ids ["main"]}
-    fingerprint {:skip true})
+    fingerprint {:skip true}
+    reload {:on-jsload 'example.core/reload!})
   identity)
 
 (deftask dev

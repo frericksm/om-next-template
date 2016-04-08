@@ -1,3 +1,5 @@
 {:require [example.core]
+ :init-fns [example.core/init!]
  :optimizations :none
- :source-map true}
+ :source-map true
+ :compiler-options {:parallel-build true}}
