@@ -3,9 +3,10 @@
             [example.util :as util]))
 
 (defonce app-state
-  (atom {:todos/list [[:todos/by-id 1] [:todos/by-id 2]]
-         :todos/by-id {1 {:db/id 1 :todo/text "First Todo"}
-                       2 {:db/id 2 :todo/text "Second Todo"}}}))
+  ;; {:todos/list [[:todos/by-id 1] [:todos/by-id 2]]
+  ;;  :todos/by-id {1 {:db/id 1 :todo/text "First Todo"}
+  ;;                2 {:db/id 2 :todo/text "Second Todo"}}}
+  (atom {}))
 
 ;;;;;;;;;;
 ;; Read ;;
@@ -23,7 +24,10 @@
 (defmethod read :todos/list
   [{:keys [state query]} key _]
   (let [st @state]
-    {:value (om/db->tree query (get st key) st)}))
+    (if (contains? st key)
+      {:value (om/db->tree query (get st key) st)}
+      ;; First pull
+      {:remote true})))
 
 ;;;;;;;;;;;;
 ;; Mutate ;;

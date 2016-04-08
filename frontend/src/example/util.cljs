@@ -1,5 +1,10 @@
 (ns example.util)
 
+(defn mlog [& messages]
+  ;; TODO disable in prod
+  (when true
+    (apply println messages)))
+
 (defn dissoc-in
   "Dissociates an entry from a nested associative structure returning a new
   nested structure. keys is a sequence of keys. Any empty maps that result
