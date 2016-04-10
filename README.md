@@ -6,3 +6,4 @@ A basic Om Next app with my preferred setup.
 - [ ] routing
 - [ ] fix file fingerprint
 - [ ] pretty printed, up-to-date app state
+- [ ] Devcards
