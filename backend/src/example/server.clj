@@ -26,10 +26,10 @@
           [key new-value])))))
 
 (defn handle-query [req]
-  (let [query (:body req)
-        ;; TODO identity
-        resp (parser/parser {:conn (conn) :identity (:identity req)} query)]
-    (->> resp
+  (let [query (:body req)]
+    (->> query
+      ;; TODO identity
+      (parser/parser {:conn (conn) :identity (:identity req)})
       (into {} pull-up-tempids)
       (response/response))))
 
