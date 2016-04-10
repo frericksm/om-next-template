@@ -49,4 +49,12 @@
      (d/transact conn [[:db.fn/retractEntity id]])
      {})})
 
+(defmethod mutate 'todo/update
+  [{:keys [conn]} _ {:keys [db/id] :as todo-obj}]
+  {:value {:keys [[:todo/by-id id]]}
+   :action
+   (fn []
+     (d/transact conn [todo-obj])
+     nil)})
+
 (def parser (om/parser {:read readf :mutate mutate}))

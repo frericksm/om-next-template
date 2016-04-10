@@ -1,9 +1,13 @@
-(ns example.util)
+(ns example.util
+  (:require [om.next :as om]))
 
 (defn mlog [& messages]
   ;; TODO disable in prod
   (when true
     (apply println messages)))
+
+(defn update-input! [e component key]
+  (om/update-state! component assoc key (-> e .-target .-value)))
 
 (defn dissoc-in
   "Dissociates an entry from a nested associative structure returning a new

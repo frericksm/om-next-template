@@ -60,8 +60,15 @@
 
 (defmethod mutate 'todo/delete
   [{:keys [state]} _ {:keys [db/id]}]
-  {:action (fn []
-             (swap! state delete-todo id))
+  {:action (fn [] (swap! state delete-todo id))
+   :remote true})
+
+(defn update-todo [state {:keys [db/id todo/text]}]
+  (assoc-in state [:todo/by-id id :todo/text] text))
+
+(defmethod mutate 'todo/update
+  [{:keys [state]} _ opts]
+  {:action (fn [] (swap! state update-todo opts))
    :remote true})
 
 (def parser (om/parser {:read read :mutate mutate}))

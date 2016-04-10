@@ -2,6 +2,7 @@
   (:require [om.next :as om :refer-macros [defui]]
             [sablono.core :refer-macros [html]]
             [cljs.pprint :as pprint]
+            [example.util :as util]
             [example.state :as state]))
 
 (defui ^:once Todo
@@ -14,11 +15,43 @@
     [:todo/by-id (:db/id props)])
 
   Object
+  (componentWillMount [this]
+    (om/update-state! this assoc :todo-input (-> this om/props :todo/text)))
+
+  (componentWillUpdate [this next-props next-state]
+    (let [input-changed? (:input-changed? next-state)]
+      (when (and
+              (not input-changed?)
+              (not= (:todo/text next-props) (:todo-input next-state)))
+        (om/update-state! this assoc :input-changed? true))
+
+      (when (and
+              input-changed?
+              ;; Does string comparision on every keystroke
+              (not= (:todo/text next-props) (-> this om/props :todo/text)))
+        (om/update-state! this assoc :input-changed? false))))
+
   (render [this]
     (let [props (om/props this)
+          local-state (om/get-state this)
           delete (-> this om/get-computed :todo/delete-fn)]
       (html
-        [:li (:todo/text props)
+        [:li
+         [:form
+          {:on-submit
+           (fn [event]
+             (.preventDefault event)
+             (om/transact! this
+               `[(todo/update {:db/id ~(:db/id props)
+                               :todo/text ~(:todo-input local-state)})]))}
+
+          [:input {:value (:todo-input local-state)
+                   :on-change #(util/update-input! % this :todo-input)}]
+
+          (when (:input-changed? local-state)
+            [:button.btn
+             "Save"])]
+
          [:button.btn.btn-sm.btn-danger
           {:on-click #(delete (:db/id props))}
           "x"]]))))
