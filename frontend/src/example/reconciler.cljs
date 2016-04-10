@@ -11,5 +11,6 @@
   (om/reconciler
     {:state state/app-state
      :parser state/parser
+     :id-key :db/id
      :normalize true
      :send #(remote/send-to-remotes! remotes %1 %2)}))

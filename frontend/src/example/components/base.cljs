@@ -11,7 +11,7 @@
 
   static om/Ident
   (ident [this props]
-    [:todos/by-id (:db/id props)])
+    [:todo/by-id (:db/id props)])
 
   Object
   (render [this]
@@ -31,18 +31,18 @@
 (defui ^:once Base
   static om/IQuery
   (query [this]
-    [{:todos/list (om/get-query Todo)}])
+    [{:todo/list (om/get-query Todo)}])
 
   Object
   (render [this]
     (let [props (om/props this)]
       (html
         [:div.container
-         [:button.btn {:on-click #(om/transact! this `[(todo/create)])}
+         [:button.btn {:on-click #(om/transact! this `[(todo/create {:db/id ~(om/tempid)})])}
           "New Todo"]
 
          (let [delete-fn (partial delete-todo this)]
-           (for [t (:todos/list props)]
+           (for [t (:todo/list props)]
              (todo (-> t
                      (om/computed {:todo/delete-fn delete-fn})))))
 

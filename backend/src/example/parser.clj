@@ -18,7 +18,7 @@
           :where [?eid :todo/text]]
      db query)))
 
-(defmethod readf :todos/list
+(defmethod readf :todo/list
   [{:keys [conn query]} _ _]
   {:value (todos (d/db conn) query)})
 
@@ -27,5 +27,26 @@
 ;;;;;;;;;;;;;;;
 
 (defmulti mutate (fn [env k params] k))
+
+(defmethod mutate 'todo/create
+  [{:keys [conn]} _ params]
+  {:value {:keys [:todo/list]}
+   :action
+   (fn []
+     (let [client-id (:db/id params)
+           temp-id #db/id[:db.part/user -100]
+           result @(d/transact conn
+                     [(merge params {:db/id temp-id
+                                     :todo/text "new todo"})])
+           new-id (db-util/resolve-tempid result temp-id)]
+       {:tempids {[:todo/by-id client-id] [:todo/by-id new-id]}}))})
+
+(defmethod mutate 'todo/delete
+  [{:keys [conn]} _ {:keys [db/id]}]
+  {:value {:keys [:todo/list]}
+   :action
+   (fn []
+     (d/transact conn [[:db.fn/retractEntity id]])
+     {})})
 
 (def parser (om/parser {:read readf :mutate mutate}))
