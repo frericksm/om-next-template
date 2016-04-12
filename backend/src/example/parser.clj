@@ -11,7 +11,7 @@
 
 (defn todos
   "Pull todos from database"
-  ([db] (todos db nil))
+  ([db] (todos db '[*]))
   ([db query]
    (d/q '[:find [(pull ?eid query) ...]
           :in $ query
