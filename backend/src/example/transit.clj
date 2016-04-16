@@ -19,7 +19,10 @@
   [handler]
   (fn [request]
     ;; TODO - handle requests without bodies?
-    (-> request
-      (update :body #(transit/read (om-transit/reader %)))
-      (handler)
-      (update :body transit-encode))))
+    (if (= (:content-type request) "application/transit+json")
+      (-> request
+        (update :body #(transit/read (om-transit/reader %)))
+        (handler)
+        (update :body transit-encode))
+      ;; Not Transit
+      (handler request))))
