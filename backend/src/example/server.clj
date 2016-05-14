@@ -1,9 +1,10 @@
 (ns example.server
   (:require [ring.util.response :as response]
-            [ring.middleware.cors :refer [wrap-cors]]
             ;; TODO maybe not?
-            [reloaded.repl :refer [system]]
+            [system.repl :refer [system]]
             [example.transit :refer [wrap-transit]]
+            [example.cors :refer [wrap-cors]]
+            [example.errors :as errors]
             [example.parser :as parser]
             [example.util :as util]))
 
@@ -38,4 +39,5 @@
     (wrap-transit)
     (wrap-cors
       :access-control-allow-origin [#".*"]
-      :access-control-allow-methods [:post])))
+      :access-control-allow-methods [:post])
+    (errors/wrap-error-notifications)))

@@ -7,7 +7,7 @@
             [com.stuartsierra.component :as component]
             [system.components
              [datomic :refer [new-datomic-db]]
-             [http-kit :refer [new-web-server]]]))
+             [aleph :refer [new-web-server]]]))
 
 (defrecord DatomicDatabase [uri conn]
   component/Lifecycle

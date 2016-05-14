@@ -23,9 +23,9 @@
                   [cljsjs/react "15.0.0-rc.2-0"]
                   [cljsjs/react-dom "15.0.0-rc.2-0"]
                   [sablono "0.6.3"]
-                  [org.omcljs/om "1.0.0-alpha32"]
+                  [org.omcljs/om "1.0.0-alpha34"]
 
-                  [adzerk/env "0.2.0"]
+                  [adzerk/env "0.3.0"]
                   [com.domkm/silk "0.1.1"]
 
                   [com.cognitect/transit-cljs "0.8.232"]
