@@ -53,25 +53,19 @@
     (fingerprint)
     (target)))
 
-(deftask run []
+(defn set-development-env! []
+  (task-options!
+    cljs {:ids ["main"]}
+    fingerprint {:skip true}
+    reload {:on-jsload 'example.core/reload!}))
+
+(deftask dev
+  "Run application in development mode"
+  []
+  (set-development-env!)
   (comp
     (serve :handler 'afrey.ring-html5-handler/handler :reload true :port 3001)
     (watch)
     (cljs-repl)
     (reload)
     (build)))
-
-(deftask development []
-  (merge-env! :source-paths #{"dev"})
-  (task-options!
-    cljs {:ids ["main"]}
-    fingerprint {:skip true}
-    reload {:on-jsload 'example.core/reload!})
-  identity)
-
-(deftask dev
-  "Run application in development mode"
-  []
-  (comp
-    (development)
-    (run)))
