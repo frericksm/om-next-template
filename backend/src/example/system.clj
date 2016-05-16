@@ -20,6 +20,11 @@
 (defn new-database [db-uri]
   (DatomicDatabase. db-uri nil))
 
+(defn dev-system []
+  (component/system-map
+    :db (new-database env/DATOMIC_URI)
+    :web (new-web-server (Integer. env/PORT) #'app)))
+
 (defn prod-system []
   (component/system-map
     :db (new-database env/DATOMIC_URI)

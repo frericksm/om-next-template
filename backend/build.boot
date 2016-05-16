@@ -20,15 +20,13 @@
 
 (require
   '[system.boot :refer [system run]]
-  '[example.system :refer [prod-system]])
+  '[example.system :refer [dev-system]])
 
 (deftask dev
   "Run a restartable system in the repl"
   []
   (comp
     (watch :verbose true)
-    (system :sys #'prod-system :auto true :files ["server.clj"
-                                                  "errors.clj"
-                                                  "cors.clj"])
+    (system :sys #'dev-system :auto true)
     (speak)
     (repl :server true)))
