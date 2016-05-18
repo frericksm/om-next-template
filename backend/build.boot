@@ -7,7 +7,12 @@
 
                   [org.danielsz/system "0.3.0-SNAPSHOT"]
                   [aleph "0.4.1"]
+
+                  ;; DB
                   [com.datomic/datomic-free "0.9.5359"]
+                  [com.flyingmachine/datomic-booties "0.1.0"]
+                  [io.rkn/conformity "0.4.0"]
+
 
                   [buddy "0.13.0"]
 

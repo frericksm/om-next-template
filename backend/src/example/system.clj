@@ -2,7 +2,6 @@
   (:import datomic.Util)
   (:require [example.env :as env]
             [example.server :refer [app]]
-            ;; [town.user :as user]
             [example.db.util :as db-util]
             [com.stuartsierra.component :as component]
             [system.components

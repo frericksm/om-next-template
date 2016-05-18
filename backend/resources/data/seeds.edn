@@ -1,5 +1,0 @@
-[{:db/id #db/id[:db.part/user]
-  :todo/text "Todo - 1"}
-
- {:db/id #db/id[:db.part/user]
-  :todo/text "Todo - 2"}]
