@@ -6,36 +6,36 @@
                   [adzerk/boot-cljs "1.7.170-3" :scope "test"]
 
                   ;; REPL
-                  [adzerk/boot-cljs-repl "0.3.0" :scope "test"]
-                  [com.cemerick/piggieback "0.2.1" :scope "test"]
-                  [weasel "0.7.0" :scope "test"]
+                  [adzerk/boot-cljs-repl   "0.3.3"] ;; latest release
+                  [com.cemerick/piggieback "0.2.1"  :scope "test"]
+                  [weasel                  "0.7.0"  :scope "test"]
                   [org.clojure/tools.nrepl "0.2.12" :scope "test"]
 
-                  [adzerk/boot-reload "0.4.7" :scope "test"]
-                  [pandeiro/boot-http "0.7.0" :scope "test"]
-                  [afrey/ring-html5-handler "1.0.0" :scope "test"]
+                  [adzerk/boot-reload "0.4.13" :scope "test"]
+                  [pandeiro/boot-http "0.7.6" :scope "test"]
+                  [afrey/ring-html5-handler "1.1.0" :scope "test"]
 
-                  [devcards "0.2.1-5" :exclusions [cljsjs/react] :scope "test"]
+                  [devcards "0.2.2" :exclusions [cljsjs/react] :scope "test"]
 
-                  [org.clojure/clojurescript "1.8.40"]
+                  [org.clojure/clojurescript "1.9.293"]
 
                   ;; React
-                  [cljsjs/react "15.0.0-rc.2-0"]
-                  [cljsjs/react-dom "15.0.0-rc.2-0"]
-                  [sablono "0.6.3"]
-                  [org.omcljs/om "1.0.0-alpha34"]
+                  [cljsjs/react "15.3.1-1"] 
+                  [cljsjs/react-dom "15.3.1-1"]
+                  [sablono "0.7.6"]
+                  [org.omcljs/om "1.0.0-alpha47"]
 
                   [adzerk/env "0.3.0"]
-                  [com.domkm/silk "0.1.1"]
+                  [com.domkm/silk "0.1.2"]
 
-                  [com.cognitect/transit-cljs "0.8.232"]
+                  [com.cognitect/transit-cljs "0.8.239"]
 
                   ;; Assets
                   [boot-fingerprint "0.1.1-SNAPSHOT"]
 
                   ;; Styles
                   [org.webjars.bower/bootstrap "4.0.0-alpha.2"]
-                  [deraen/boot-sass "0.2.1" :scope "test"]])
+                  [deraen/boot-sass "0.3.0" :scope "test"]])
 
 (require
   '[adzerk.boot-cljs            :refer [cljs]]
