@@ -31,7 +31,7 @@
                   [com.cognitect/transit-cljs "0.8.239"]
 
                   ;; Assets
-                  [boot-fingerprint "0.1.1-SNAPSHOT"]
+                  [org.clojars.nberger/boot-fingerprint "0.1.2-SNAPSHOT"]
 
                   ;; Styles
                   [org.webjars.bower/bootstrap "4.0.0-alpha.2"]
